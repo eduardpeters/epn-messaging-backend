@@ -22,6 +22,11 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('A user disconnected');
     });
+
+    socket.on('message', (data) => {
+        socket.emit('messageResponse', data);
+    });
+
     socket.on("connect_error", (err) => {
         console.log(`connect_error due to ${err.message}`);
     });

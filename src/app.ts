@@ -24,7 +24,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('message', (data) => {
-        socket.emit('messageResponse', data);
+        io.emit('messageResponse', data);
     });
 
     socket.on("connect_error", (err) => {

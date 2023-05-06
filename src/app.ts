@@ -34,6 +34,10 @@ io.on('connection', (socket) => {
         socket.disconnect();
     });
 
+    socket.on('typing', (data) => {
+        socket.broadcast.emit('typingResponse', data);
+    });
+
     socket.on('message', (data) => {
         io.emit('messageResponse', data);
     });

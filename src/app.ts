@@ -22,27 +22,19 @@ let users = [];
 
 const {
     newUser,
-    disconnectUser
+    disconnectUser,
+    typingUser,
+    newMessage,
+    connectionError
 } = createChatHandlers(io, users);
 
 io.on('connection', (socket) => {
     console.log(`${socket.id} user just connected!`);
-
     socket.on('newUser', newUser);
-
     socket.on('disconnect', disconnectUser);
-
-    socket.on('typing', (data) => {
-        socket.broadcast.emit('typingResponse', data);
-    });
-
-    socket.on('message', (data) => {
-        io.emit('messageResponse', data);
-    });
-
-    socket.on("connect_error", (err) => {
-        console.log(`connect_error due to ${err.message}`);
-    });
+    socket.on('typing', typingUser);
+    socket.on('message', newMessage);
+    socket.on("connect_error", connectionError);
 });
 
 app.get('/api', (req, res) => {

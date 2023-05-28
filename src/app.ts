@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import createChatHandlers from './handlers/chatHandlers';
 
 dotenv.config();
 const app = express();
@@ -19,20 +20,17 @@ const io = new Server(server, {
 
 let users = [];
 
+const {
+    newUser,
+    disconnectUser
+} = createChatHandlers(io, users);
+
 io.on('connection', (socket) => {
     console.log(`${socket.id} user just connected!`);
 
-    socket.on('newUser', (data) => {
-        users.push(data);
-        io.emit('newUserResponse', users);
-    });
+    socket.on('newUser', newUser);
 
-    socket.on('disconnect', () => {
-        console.log('A user disconnected: ', socket.id);
-        users = users.filter(user => user.socketID !== socket.id);
-        io.emit('newUserResponse', users);
-        socket.disconnect();
-    });
+    socket.on('disconnect', disconnectUser);
 
     socket.on('typing', (data) => {
         socket.broadcast.emit('typingResponse', data);

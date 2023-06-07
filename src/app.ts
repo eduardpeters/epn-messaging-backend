@@ -4,6 +4,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import createChatHandlers from './handlers/chatHandlers';
+import type { User } from './epn.d.ts';
 
 dotenv.config();
 const app = express();
@@ -18,7 +19,7 @@ const io = new Server(server, {
     }
 });
 
-let users = [];
+let users: User[] = [];
 
 const {
     newUser,

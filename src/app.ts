@@ -4,6 +4,7 @@ import express from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import createChatHandlers from './handlers/chatHandlers';
+import loginRoute from './routes/loginRoute';
 import type { User } from './epn.d.ts';
 
 dotenv.config();
@@ -37,6 +38,8 @@ io.on('connection', (socket) => {
     socket.on('message', newMessage);
     socket.on("connect_error", connectionError);
 });
+
+app.use('/login', loginRoute);
 
 app.get('/api', (req, res) => {
     res.json({

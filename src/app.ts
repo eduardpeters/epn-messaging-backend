@@ -5,6 +5,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import createChatHandlers from './handlers/chatHandlers';
 import loginRoute from './routes/loginRoute';
+import registerRoute from './routes/registerRoute';
 import type { User } from './epn.d.ts';
 
 dotenv.config();
@@ -39,13 +40,14 @@ io.on('connection', (socket) => {
     socket.on("connect_error", connectionError);
 });
 
-app.use('/login', loginRoute);
-
 app.get('/api', (req, res) => {
     res.json({
         message: 'Hello World!',
     });
 });
+app.use('/api/login', loginRoute);
+app.use('/api/register', registerRoute);
+
 
 server.listen(PORT, () => {
     return console.log(`Up and running! Listening on port: ${PORT}`);

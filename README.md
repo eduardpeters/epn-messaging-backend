@@ -2,7 +2,7 @@
 Venturing into WebSocket territory with a Node server
 
 ## Features
-Not many yet...
+- Storage using a PostgreSQL database
 - Handles multiple users in a single chat room
 - Handles users joining or leaving and updates clients
 - Broadcasts when a user is typing

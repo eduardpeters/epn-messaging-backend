@@ -2,7 +2,7 @@ import Joi from 'joi';
 import type { RegisterBody, LoginBody } from '../epn.d.ts';
 
 const usernameSchema = Joi.string().min(6).max(50).required();
-const passwordSchema = Joi.string().min(6).max(255).required;
+const passwordSchema = Joi.string().min(6).max(255).required();
 
 export function validateRegisterBody(body: RegisterBody) {
     const schema = Joi.object({
@@ -10,6 +10,7 @@ export function validateRegisterBody(body: RegisterBody) {
         password: passwordSchema,
         confirmPassword: passwordSchema
     });
+    console.log(schema.validate(body));
     return schema.validate(body);
 }
 

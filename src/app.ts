@@ -13,6 +13,7 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(cors());
+app.use(express.json());
 
 const server = createServer(app);
 const io = new Server(server, {

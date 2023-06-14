@@ -8,16 +8,15 @@ export function validateRegisterBody(body: RegisterBody) {
     const schema = Joi.object({
         username: usernameSchema,
         password: passwordSchema,
-        confirmPassword: passwordSchema
-    });
-    console.log(schema.validate(body));
+        confirmPassword: Joi.ref('password')
+    }).and('password', 'confirmPassword');
     return schema.validate(body);
 }
 
 export function validateLoginBody(body: LoginBody) {
     const schema = Joi.object({
         username: usernameSchema,
-        password: passwordSchema,
+        password: passwordSchema
     });
     return schema.validate(body);
 }
